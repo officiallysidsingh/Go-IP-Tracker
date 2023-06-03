@@ -57,7 +57,8 @@ func showData() {
 	}
 	
 	fmt.Println("Data Found :- ")
-	fmt.Println(data)
+
+	fmt.Printf("IP :\t\t%s\nCITY:\t\t%s\nREGION:\t\t%s\nCOUNTRY:\t%s\nLOC:\t\t%s\nPOSTAL:\t\t%s\nTIMEZONE:\t%s\nORG:\t\t%s\n", data.IP, data.City, data.Region, data.Country, data.Loc, data.Postal, data.Timezone, data.Org)
 }
 
 func getData(url string) []byte {
