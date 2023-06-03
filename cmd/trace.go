@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
-	"log"
 	"net/http"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +23,8 @@ var traceCmd = &cobra.Command{
 				showData(ip)
 			}
 		} else {
-			fmt.Println("Please provide the IP Address")
+			red := color.New(color.FgRed).Add(color.Bold)
+			red.Println("Please provide the IP Address")
 		}
 	},
 }
@@ -52,12 +52,17 @@ func showData(ip string) {
 
 	err := json.Unmarshal(resByte, &data)
 	if err != nil {
-		log.Println("Unable to Unmarshal the data")
+		red := color.New(color.FgRed).Add(color.Bold)
+		red.Println("Unable to Unmarshal the data")
 	}
 	
-	fmt.Println("Data Found :- ")
+	dataFound := color.New(color.FgGreen).Add(color.Underline).Add(color.Bold)
+	dataFound.Printf("\nData Found")
+	nextline := color.New(color.FgGreen).Add(color.Bold)
+	nextline.Printf(" :- \n\n")
 
-	fmt.Printf("IP :\t\t%s\nCITY:\t\t%s\nREGION:\t\t%s\nCOUNTRY:\t%s\nLOC:\t\t%s\nPOSTAL:\t\t%s\nTIMEZONE:\t%s\nORG:\t\t%s\n", 
+	results := color.New(color.FgMagenta).Add(color.Bold)
+	results.Printf("IP :\t\t%s\nCITY:\t\t%s\nREGION:\t\t%s\nCOUNTRY:\t%s\nLOC:\t\t%s\nPOSTAL:\t\t%s\nTIMEZONE:\t%s\nORG:\t\t%s\n", 
 				data.IP, 
 				data.City, 
 				data.Region, 
@@ -73,13 +78,15 @@ func getData(url string) []byte {
 	res, err := http.Get(url)
 
 	if err != nil {
-		log.Println("Unable to get the response")
+		red := color.New(color.FgRed).Add(color.Bold)
+		red.Println("Unable to get the response")
 	}
 
 	resByte, err := io.ReadAll(res.Body)
 
 	if err != nil {
-		log.Println("Unable to read the response")
+		red := color.New(color.FgRed).Add(color.Bold)
+		red.Println("Unable to read the response")
 	}
 
 	return resByte
