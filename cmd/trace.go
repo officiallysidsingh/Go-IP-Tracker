@@ -21,8 +21,7 @@ var traceCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 {
 			for _, ip := range args {
-				fmt.Println("IP Address :- ", ip)
-				showData()
+				showData(ip)
 			}
 		} else {
 			fmt.Println("Please provide the IP Address")
@@ -45,8 +44,8 @@ type IPAddress struct {
 	Org			string		`json:"org"`
 }
 
-func showData() {
-	url := "http://ipinfo.io/1.1.1.1/geo"
+func showData(ip string) {
+	url := "http://ipinfo.io/"+ ip +"/geo"
 	resByte := getData(url)
 
 	var data IPAddress
@@ -58,7 +57,15 @@ func showData() {
 	
 	fmt.Println("Data Found :- ")
 
-	fmt.Printf("IP :\t\t%s\nCITY:\t\t%s\nREGION:\t\t%s\nCOUNTRY:\t%s\nLOC:\t\t%s\nPOSTAL:\t\t%s\nTIMEZONE:\t%s\nORG:\t\t%s\n", data.IP, data.City, data.Region, data.Country, data.Loc, data.Postal, data.Timezone, data.Org)
+	fmt.Printf("IP :\t\t%s\nCITY:\t\t%s\nREGION:\t\t%s\nCOUNTRY:\t%s\nLOC:\t\t%s\nPOSTAL:\t\t%s\nTIMEZONE:\t%s\nORG:\t\t%s\n", 
+				data.IP, 
+				data.City, 
+				data.Region, 
+				data.Country, 
+				data.Loc, 
+				data.Postal, 
+				data.Timezone, 
+				data.Org)
 }
 
 func getData(url string) []byte {
